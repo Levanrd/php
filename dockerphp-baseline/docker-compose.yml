@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  web:
+    # image: httpd:latest
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    volumes:
+      - ./src:/var/www/html
+    image: nginx:alpine
+    ports:
+    - "8080:80"
+    networks:
+      - network
+
+  php:
+    image: php:fpm-alpine
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
